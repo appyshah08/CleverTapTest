@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 prodViewedAction.put("Product Name", "CleverTap");
 
 
-                clevertapDefaultInstance.pushEvent("Product Viewed", prodViewedAction);
+                clevertapDefaultInstance.pushEvent("Product viewed", prodViewedAction);
             }
         });
         clevertapDefaultInstance.createNotificationChannel(getApplicationContext(),"testCleverTap","Test CleverTap","Clevertap testing", NotificationManager.IMPORTANCE_MAX,true);
