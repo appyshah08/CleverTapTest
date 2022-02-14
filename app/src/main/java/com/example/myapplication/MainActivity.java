@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pushProfileToCleverTap(clevertapDefaultInstance);
                 HashMap<String, Object> prodViewedAction = new HashMap<String, Object>();
                 prodViewedAction.put("Product ID", 1);
                 prodViewedAction.put("Product Image", "https://d35fo82fjcw0y8.cloudfront.net/2018/07/26020307/customer-success-clevertap.jpg");
@@ -36,11 +37,39 @@ public class MainActivity extends AppCompatActivity {
 
 
                 clevertapDefaultInstance.pushEvent("Product viewed", prodViewedAction);
+
             }
         });
         clevertapDefaultInstance.createNotificationChannel(getApplicationContext(),"testCleverTap","Test CleverTap","Clevertap testing", NotificationManager.IMPORTANCE_MAX,true);
         setUserDetails(clevertapDefaultInstance);
 
+    }
+
+    private void pushProfileToCleverTap(CleverTapAPI clevertapDefaultInstance) {
+
+        HashMap<String, Object> profileUpdate = new HashMap<String, Object>();
+        profileUpdate.put("Name", "Jack Montana");                  // String
+        profileUpdate.put("Identity", 61026032);                    // String or number
+        profileUpdate.put("Email", "jack@gmail.com");               // Email address of the user
+        profileUpdate.put("Phone", "+14155551234");                 // Phone (with the country code, starting with +)
+        profileUpdate.put("Gender", "M");                           // Can be either M or F
+        profileUpdate.put("Employed", "Y");                         // Can be either Y or N
+        profileUpdate.put("Education", "Graduate");                 // Can be either Graduate, College or School
+        profileUpdate.put("Married", "Y");                          // Can be either Y or N
+        profileUpdate.put("DOB", new Date());                       // Date of Birth. Set the Date object to the appropriate value first
+        profileUpdate.put("Tz", "Asia/Kolkata");                    //an abbreviation such as "PST", a full name such as "America/Los_Angeles",
+        //or a custom ID such as "GMT-8:00"
+       // URL to the Image
+         //number from SMS                                                                  notifications
+        ArrayList<String> stuff = new ArrayList<String>();
+        stuff.add("bag");
+        stuff.add("shoes");
+        profileUpdate.put("MyStuff", stuff);                        //ArrayList of Strings
+
+        String[] otherStuff = {"Jeans","Perfume"};
+        profileUpdate.put("MyStuff", otherStuff);                   //String Array
+
+        clevertapDefaultInstance.pushProfile(profileUpdate);
     }
 
     private void setupFireBaseToken(CleverTapAPI clevertapDefaultInstance) {
